@@ -1,26 +1,19 @@
 import cv2
-import numpy as np
-import matplotlib.pyplot as plt
-
 
 face_detection = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-
-def detect_face(img):
-
-    face_img = img.copy()
-
-    face_rectangle = face_cascade.detectMultiScale(face_img)
-
-    for (x,y,w,h) in face_rectangle:
-        cv2.rectangle(face_img, (x,y), (x+w, y+h), (255,255,255), thickness=10)
-
-    return face_img
 
 cap = cv2.VideoCapture(0)
 
 while True:
 
     ret, frame = cap.read()
+    print(ret)
+
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    face_rectangle = face_detection.detectMultiScale(gray, 1.3, 5)
+
+    for (x, y, w, h) in face_rectangle:
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
     cv2.imshow('Face Detection Video', frame)
 
